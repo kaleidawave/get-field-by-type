@@ -14,7 +14,10 @@ use syn_helpers::{
 const GET_FIELD_TYPE_TARGET: &str = "get_field_by_type_target";
 const GET_FIELD_NO_TYPE_BEHAVIOR: &str = "get_field_no_type_behavior";
 
-#[proc_macro_derive(GetFieldByType, attributes(get_field_by_type_target, get_field_no_type_behavior))]
+#[proc_macro_derive(
+    GetFieldByType,
+    attributes(get_field_by_type_target, get_field_no_type_behavior)
+)]
 pub fn get_field_by_type(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
 
