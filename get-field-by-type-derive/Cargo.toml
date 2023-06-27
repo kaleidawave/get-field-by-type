@@ -1,0 +1,19 @@
+[package]
+name = "get-field-by-type-derive"
+authors = [ "Ben <kaleidawave@gmail.com>" ]
+description = "Derive macro for get-field-by-type. Automates finding fields with matching type"
+version = "0.0.0"
+license = "MIT"
+edition = "2021"
+repository = "https://github.com/kaleidawave/get-field-by-type"
+
+[lib]
+name = "get_field_by_type_derive"
+path = "macro.rs"
+proc-macro = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+syn-helpers = { version = "0.4.3", features = ["syn-extra-traits"] }
+# syn-helpers = { path = "../../syn-helpers", features = ["syn-extra-traits"]}
