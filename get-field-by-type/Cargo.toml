@@ -1,6 +1,6 @@
 [package]
 name = "get-field-by-type"
-authors = [ "Ben <kaleidawave@gmail.com>" ]
+authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Get a value of field, based on the type of a field"
 version = "0.0.0"
 license = "MIT"

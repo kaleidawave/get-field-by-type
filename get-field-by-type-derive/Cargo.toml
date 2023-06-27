@@ -1,6 +1,6 @@
 [package]
 name = "get-field-by-type-derive"
-authors = [ "Ben <kaleidawave@gmail.com>" ]
+authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Derive macro for get-field-by-type. Automates finding fields with matching type"
 version = "0.0.0"
 license = "MIT"
@@ -16,4 +16,3 @@ proc-macro = true
 
 [dependencies]
 syn-helpers = { version = "0.4.3", features = ["syn-extra-traits"] }
-# syn-helpers = { path = "../../syn-helpers", features = ["syn-extra-traits"]}
