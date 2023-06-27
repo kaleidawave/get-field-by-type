@@ -2,7 +2,7 @@
 name = "get-field-by-type-derive"
 authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Derive macro for get-field-by-type. Automates finding fields with matching type"
-version = "0.0.0"
+version = "0.0.2"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/kaleidawave/get-field-by-type"

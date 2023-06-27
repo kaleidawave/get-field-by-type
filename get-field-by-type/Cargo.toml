@@ -2,7 +2,7 @@
 name = "get-field-by-type"
 authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Get a value of field, based on the type of a field"
-version = "0.0.0"
+version = "0.0.2"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/kaleidawave/get-field-by-type"
@@ -12,4 +12,4 @@ repository = "https://github.com/kaleidawave/get-field-by-type"
 path = "lib.rs"
 
 [dependencies]
-get-field-by-type-derive = { version = "0.0.0", path = "../get-field-by-type-derive" }
+get-field-by-type-derive = { version = "0.0.2", path = "../get-field-by-type-derive" }
