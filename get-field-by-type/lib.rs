@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+#![doc = include_str!("./README.md")]
 
 pub use get_field_by_type_derive::GetFieldByType;
 
