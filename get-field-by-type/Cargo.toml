@@ -3,7 +3,7 @@ name = "get-field-by-type"
 authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Get a value of field, based on the type of a field"
 keywords = ["derive-macro", "type", "field", "compile-time", "getter"]
-version = "0.0.2"
+version = "0.0.3"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/kaleidawave/get-field-by-type"
@@ -13,4 +13,4 @@ repository = "https://github.com/kaleidawave/get-field-by-type"
 path = "lib.rs"
 
 [dependencies]
-get-field-by-type-derive = { version = "0.0.2", path = "../get-field-by-type-derive" }
+get-field-by-type-derive = { version = "0.0.3", path = "../get-field-by-type-derive" }
