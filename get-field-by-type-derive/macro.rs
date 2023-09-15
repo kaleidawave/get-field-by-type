@@ -5,9 +5,7 @@ use syn_helpers::{
     derive_trait,
     proc_macro2::Span,
     quote,
-    syn::{
-        parse_macro_input, parse_quote, token::And, DeriveInput, Expr, Ident, Stmt, TypeReference,
-    },
+    syn::{parse2, parse_quote, token::And, DeriveInput, Expr, Ident, Stmt, TypeReference},
     Constructable, Field, FieldMut, Fields, Trait, TraitItem, TypeOfSelf,
 };
 
@@ -19,7 +17,13 @@ const GET_FIELD_NO_TYPE_BEHAVIOR: &str = "get_field_no_type_behavior";
     attributes(get_field_by_type_target, get_field_no_type_behavior)
 )]
 pub fn get_field_by_type(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as DeriveInput);
+    get_field_by_type_from_token_stream(input.into()).into()
+}
+
+fn get_field_by_type_from_token_stream(
+    input: syn_helpers::proc_macro2::TokenStream,
+) -> syn_helpers::proc_macro2::TokenStream {
+    let input: DeriveInput = parse2(input).unwrap();
 
     let target_attr = input
         .attrs
@@ -62,6 +66,9 @@ pub fn get_field_by_type(input: TokenStream) -> TokenStream {
         })),
         move |mut item| {
             item.map_constructable(|mut constructable| {
+                let constructor =  constructor_path_to_string(constructable
+                    .get_constructor_path());
+
                 let fields = constructable.get_fields_mut();
                 let unnamed_fields: bool = matches!(fields, Fields::Unnamed(..));
                 let fields_iterator = fields.fields_iterator_mut();
@@ -73,7 +80,7 @@ pub fn get_field_by_type(input: TokenStream) -> TokenStream {
                     if field.get_type() == &target_type {
                         if pattern.is_some() {
                             return Err(Box::<dyn std::error::Error>::from(
-                                "Already field with this type",
+                                format!("Already field with this type on {}", constructor),
                             ));
                         }
                         pattern = Some(field.get_reference_with_config(false, ""))
@@ -98,9 +105,9 @@ pub fn get_field_by_type(input: TokenStream) -> TokenStream {
                         } else if let Some(ref no_type_stmt) = no_type_behavior {
                             Ok(vec![no_type_stmt.clone()])
                         } else {
-                            return Err(Box::<dyn std::error::Error>::from(
-                                "No field with this type",
-                            ));
+                            Err(Box::<dyn std::error::Error>::from(
+                                format!("No field with this type on {}", constructor),
+                            ))
                         }
                     }
                 }
@@ -117,4 +124,15 @@ pub fn get_field_by_type(input: TokenStream) -> TokenStream {
     let derive_trait = derive_trait(input, my_trait);
 
     derive_trait.into()
+}
+
+// TODO is their no other API for this?
+fn constructor_path_to_string(path: syn_helpers::syn::Path) -> String {
+    path.segments
+        .iter()
+        .fold(String::new(), |mut acc, segment| {
+            acc += "::";
+            acc += &segment.ident.to_string();
+            acc
+        })
 }
