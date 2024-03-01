@@ -10,14 +10,14 @@ checksum = "4c91ae510829160d5cfb19eb4ae7b6e01d44b767ca8f727c6cee936e53cc9ae5"
 
 [[package]]
 name = "get-field-by-type"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "get-field-by-type-derive",
 ]
 
 [[package]]
 name = "get-field-by-type-derive"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "syn-helpers",
 ]
