@@ -2,6 +2,7 @@
 name = "get-field-by-type"
 authors = ["Ben <kaleidawave@gmail.com>"]
 description = "Get a value of field, based on the type of a field"
+categories = ["rust-patterns"]
 keywords = ["derive-macro", "type", "field", "compile-time", "getter"]
 version = "0.0.3"
 license = "MIT"

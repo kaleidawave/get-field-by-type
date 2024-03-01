@@ -28,7 +28,7 @@ fn get_field_by_type_from_token_stream(
     let target_attr = input
         .attrs
         .iter()
-        .find(|attr| attr.path.is_ident(GET_FIELD_TYPE_TARGET));
+        .find(|attr| attr.path().is_ident(GET_FIELD_TYPE_TARGET));
 
     let target_type: syn_helpers::syn::Type = match target_attr {
         Some(attr) => attr.parse_args().unwrap(),
@@ -36,20 +36,15 @@ fn get_field_by_type_from_token_stream(
             // https://www.youtube.com/watch?v=wzMrK-aGCug
             return quote! {
                 compile_error!("Expected 'get_field_by_type_target' name")
-            }
-            .into();
+            };
         }
     };
 
-    let no_type_behavior_attr = input
+    let no_type_behavior: Option<syn_helpers::syn::Stmt> = input
         .attrs
         .iter()
-        .find(|attr| attr.path.is_ident(GET_FIELD_NO_TYPE_BEHAVIOR));
-
-    let no_type_behavior: Option<syn_helpers::syn::Stmt> = match no_type_behavior_attr {
-        Some(attr) => Some(attr.parse_args().unwrap()),
-        None => None,
-    };
+        .find(|attr| attr.path().is_ident(GET_FIELD_NO_TYPE_BEHAVIOR))
+        .map(|attr| attr.parse_args().unwrap());
 
     let name = parse_quote!(::get_field_by_type::GetFieldByType<#target_type>);
 
@@ -88,7 +83,7 @@ fn get_field_by_type_from_token_stream(
                 }
 
                 match pattern {
-                    Some(expr) => Ok(vec![Stmt::Expr(expr)]),
+                    Some(expr) => Ok(vec![Stmt::Expr(expr, None)]),
                     None => {
                         // TODO messy
                         if unnamed_fields && is_unit {
@@ -101,7 +96,7 @@ fn get_field_by_type_from_token_stream(
                             let expr: Expr =
                                 parse_quote!(::get_field_by_type::GetFieldByType::<#target_type>::get(#expr));
 
-                            Ok(vec![Stmt::Expr(expr)])
+                            Ok(vec![Stmt::Expr(expr, None)])
                         } else if let Some(ref no_type_stmt) = no_type_behavior {
                             Ok(vec![no_type_stmt.clone()])
                         } else {
@@ -121,9 +116,7 @@ fn get_field_by_type_from_token_stream(
         items: vec![get_item],
     };
 
-    let derive_trait = derive_trait(input, my_trait);
-
-    derive_trait.into()
+    derive_trait(input, my_trait)
 }
 
 // TODO is their no other API for this?
