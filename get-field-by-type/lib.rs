@@ -6,3 +6,14 @@ pub trait GetFieldByType<T> {
     /// Get the value of a field that has type T
     fn get(&self) -> &T;
 }
+
+// For `Box`, `Rc`, etc
+impl<T, U> GetFieldByType<T> for U
+where
+    U: std::ops::Deref,
+    U::Target: GetFieldByType<T>,
+{
+    fn get(&self) -> &T {
+        std::ops::Deref::deref(self).get()
+    }
+}

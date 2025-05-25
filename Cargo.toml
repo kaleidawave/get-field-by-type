@@ -1,2 +1,7 @@
 [workspace]
 members = ["get-field-by-type", "get-field-by-type-derive"]
+resolver = "2"
+
+[workspace.lints.clippy]
+all = "deny"
+pedantic = "deny"
