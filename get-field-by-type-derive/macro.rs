@@ -75,7 +75,7 @@ fn get_field_by_type_from_token_stream(
                     if field.get_type() == &target_type {
                         if pattern.is_some() {
                             return Err(Box::<dyn std::error::Error>::from(
-                                format!("Already field with this type on {}", constructor),
+                                format!("Already field with this type on {constructor}"),
                             ));
                         }
                         pattern = Some(field.get_reference_with_config(false, ""))
@@ -101,7 +101,7 @@ fn get_field_by_type_from_token_stream(
                             Ok(vec![no_type_stmt.clone()])
                         } else {
                             Err(Box::<dyn std::error::Error>::from(
-                                format!("No field with this type on {}", constructor),
+                                format!("No field with this type on {constructor}"),
                             ))
                         }
                     }
