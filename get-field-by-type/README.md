@@ -98,6 +98,25 @@ let a_or_b = AOrB::B(b);
 assert_eq!(*GetFieldByType::<i32>::get(&a_or_b), 10);
 ```
 
+#### With support through `Box`
+
+```rust
+use get_field_by_type::GetFieldByType;
+
+#[derive(GetFieldByType)]
+#[get_field_by_type_target(i32)]
+struct A(pub i32);
+
+#[derive(GetFieldByType)]
+#[get_field_by_type_target(i32)]
+enum JustA {
+	A(Box<A>),
+}
+
+let a = JustA::A(Box::new(A(10)));
+assert_eq!(*GetFieldByType::<i32>::get(&a), 10);
+```
+
 ## Alternatives
 
 For more manual field access, check out [getset](https://github.com/jbaublitz/getset). If looking for getting multiple fields, check out [getters-by-type](https://crates.io/crates/getters-by-type)
